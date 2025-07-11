@@ -1,13 +1,15 @@
 import { useForm } from "react-hook-form"
 import Error from "./Error";
 import type { DraftTarea } from "../types";
+import { useTareaStore } from "../types/store";
 const FormularioTareas = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
-
+    const { agregarTarea } = useTareaStore()
+    const { register, handleSubmit, formState: { errors } } = useForm<DraftTarea>()
     const registrarTarea = (data: DraftTarea) => {
         console.log('data enviada', data);
-
+       agregarTarea(data)
+        
     }
 
     return (
