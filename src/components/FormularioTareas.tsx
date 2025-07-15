@@ -2,15 +2,39 @@ import { useForm } from "react-hook-form"
 import Error from "./Error";
 import type { DraftTarea } from "../types";
 import { useTareaStore } from "../types/store";
+import { useEffect } from "react";
+
+
 const FormularioTareas = () => {
 
-    const { agregarTarea } = useTareaStore()
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<DraftTarea>()
+    const { agregarTarea, activarId, tareas, ActualizarTarea } = useTareaStore()
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<DraftTarea>()
+
+
     const registrarTarea = (data: DraftTarea) => {
-        console.log('data enviada', data);
-        agregarTarea(data)
+
+         if (activarId) {
+             ActualizarTarea(data)
+         } else {
+             console.log('data enviada', data);
+             agregarTarea(data)
+         }
+        // agregarTarea(data)
         reset()
     }
+    useEffect(() => {
+
+        if (activarId) {
+            const activarTareas = tareas.filter(tarea => tarea.id === activarId)[0]
+            // console.log('====================================');
+            // console.log('desde el use efect en el form',activarTareas);
+            // console.log('====================================');
+            setValue('tarea', activarTareas.tarea)
+            setValue('fecha', activarTareas.fecha)
+            setValue('descripcion', activarTareas.descripcion)
+        }
+
+    }, [activarId, tareas])
 
     return (
         <>
@@ -20,7 +44,7 @@ const FormularioTareas = () => {
                 <form
                     className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
                     noValidate
-                    onClick={handleSubmit(registrarTarea)}
+                    onSubmit={handleSubmit(registrarTarea)}
                 >
                     <div className="mb-5">
                         <label htmlFor="tarea" className="text-sm uppercase font-bold">

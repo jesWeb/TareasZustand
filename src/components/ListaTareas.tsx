@@ -3,13 +3,31 @@ import { useTareaStore } from "../types/store"
 
 const ListaTareas = () => {
 
-  const { tareas, eliminarTarea } = useTareaStore()
+  const { tareas, eliminarTarea, obtenerTarea } = useTareaStore()
+  console.log('son las tareas', tareas);
 
-  const handleclick = (tarea: Formulario) => {
-    console.log('====================================');
-    console.log('Eliminamos la tarea', tarea.id);
-    console.log('====================================');
+
+  // const handleclick = (tarea: Formulario) => {
+  //   console.log('====================================');
+  //   console.log('Eliminamos la tarea', tarea.id);
+  //   console.log('====================================');
+  //   eliminarTarea(tarea.id)
+  // }
+
+  const handleAccion = (accion: 'eliminar' | 'editar', tarea: Formulario) => {
+    console.log(`${accion === 'eliminar' ? 'Eliminamos' : 'Editamos'}la tarea con el id`, tarea.id);
+
+    if (accion === 'eliminar') {
       eliminarTarea(tarea.id)
+ 
+      console.log('estas en eliminar');
+   
+    } else if (accion === 'editar') {
+      obtenerTarea(tarea.id)
+      console.log('estas en ediar');
+
+    }
+
   }
 
 
@@ -31,11 +49,12 @@ const ListaTareas = () => {
                 </div>
                 <div className="flex flex-col lg-flex-row gap-3 justify-between mt-10 px-10">
                   <button
+                    onClick={() => handleAccion('editar', tarea)}
                     type="button"
                     className="py-2 px-10 text-white font-bold uppercase rounded-lg bg-indigo-600 hover:bg-indigo-600"
                   >Editar</button>
                   <button
-                    onClick={() => handleclick(tarea)}
+                    onClick={() => handleAccion('eliminar', tarea)}
                     type="button"
                     className="py-2 px-10 text-white font-bold uppercase rounded-lg bg-red-600  hover:bg-red-600 "
                   >Eliminar</button>
