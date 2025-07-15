@@ -5,11 +5,11 @@ import { useTareaStore } from "../types/store";
 const FormularioTareas = () => {
 
     const { agregarTarea } = useTareaStore()
-    const { register, handleSubmit, formState: { errors } } = useForm<DraftTarea>()
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<DraftTarea>()
     const registrarTarea = (data: DraftTarea) => {
         console.log('data enviada', data);
-       agregarTarea(data)
-        
+        agregarTarea(data)
+        reset()
     }
 
     return (
