@@ -3,6 +3,7 @@ import Error from "./Error";
 import type { DraftTarea } from "../types";
 import { useTareaStore } from "../types/store";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 
 const FormularioTareas = () => {
@@ -13,12 +14,14 @@ const FormularioTareas = () => {
 
     const registrarTarea = (data: DraftTarea) => {
 
-         if (activarId) {
-             ActualizarTarea(data)
-         } else {
-             console.log('data enviada', data);
-             agregarTarea(data)
-         }
+        if (activarId) {
+            ActualizarTarea(data)
+            toast.success('Tarea Actualizada Exitosamente')
+        } else {
+            console.log('data enviada', data);
+            agregarTarea(data)
+            toast('Tarea Guardada Exitosamente')
+        }
         // agregarTarea(data)
         reset()
     }

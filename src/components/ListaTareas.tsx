@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import type { Formulario } from "../types";
 import { useTareaStore } from "../types/store"
 
@@ -19,9 +20,10 @@ const ListaTareas = () => {
 
     if (accion === 'eliminar') {
       eliminarTarea(tarea.id)
- 
+      toast.warn('Tarea eliminada')
+
       console.log('estas en eliminar');
-   
+
     } else if (accion === 'editar') {
       obtenerTarea(tarea.id)
       console.log('estas en ediar');
